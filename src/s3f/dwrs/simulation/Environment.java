@@ -48,6 +48,8 @@ public class Environment extends ComplexElement {
     public static final Element.CategoryData ENV_FILES = new Element.CategoryData("Environment", "env", new ImageIcon(Environment.class.getResource("/resources/icons/fugue/tree.png")), ENV_FILE);
     private static final EditorManager EDITOR_MANAGER = new DefaultEditorManager(new SimulationPanel());
 
+    public static final Stroke DEFAULT_STROKE = new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.CAP_ROUND);
+    
     private final ArrayList<Line2D.Double> followLines = new ArrayList<>();
     private final ArrayList<Line2D.Double> walls = new ArrayList<>();
     private final ArrayList<Line2D.Double> followLinesTmp = new ArrayList<>();
@@ -238,7 +240,7 @@ public class Environment extends ComplexElement {
 
         Stroke str = g.getStroke();
 
-        g.setStroke(new BasicStroke(5));
+        g.setStroke(DEFAULT_STROKE);
 
         g.setColor(Color.BLACK);
         for (Shape s : followLines) {
@@ -293,7 +295,7 @@ public class Environment extends ComplexElement {
             Environment e = (Environment) resource.getPrimary();
             e.removeExternalResource(resource.getSecondary());
             Editor currentEditor = getCurrentEditor();
-            if (currentEditor != null){
+            if (currentEditor != null) {
                 currentEditor.update();
             }
         }

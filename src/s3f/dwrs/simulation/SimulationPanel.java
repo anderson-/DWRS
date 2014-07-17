@@ -66,6 +66,13 @@ import s3f.util.trafficsimulator.Timer;
  */
 public class SimulationPanel extends DrawingPanel implements Serializable, Editor {
 
+    
+    public static final BasicStroke SIMPLE_STROKE = new BasicStroke();
+    public static final BasicStroke DASHED_STROKE = new BasicStroke(1.0f,
+            BasicStroke.CAP_ROUND,
+            BasicStroke.JOIN_MITER,
+            10.0f, new float[]{5}, 0.0f);
+    
     public static final Item ITEM_LINE;
     public static final Item ITEM_LINE_POLI;
     public static final Item ITEM_OBSTACLE_LINE;
@@ -451,11 +458,6 @@ public class SimulationPanel extends DrawingPanel implements Serializable, Edito
             }
         }
     }
-    public static final BasicStroke defaultStroke = new BasicStroke();
-    public static final BasicStroke dashedStroke = new BasicStroke(1.0f,
-            BasicStroke.CAP_ROUND,
-            BasicStroke.JOIN_MITER,
-            10.0f, new float[]{5}, 0.0f);
 
     @Override
     public void draw(Graphics2D g, GraphicAttributes ga, InputState in) {
@@ -487,7 +489,7 @@ public class SimulationPanel extends DrawingPanel implements Serializable, Edito
                         y = (-sin(-robot.getTheta() - PI / 2) * r + robot.getObjectBouds().y);
                     }
 
-                    g.setStroke(dashedStroke); //linha pontilhada
+                    g.setStroke(DASHED_STROKE); //linha pontilhada
                     //desenha o circulo
                     g.setColor(Color.gray);
                     circle.setFrame(x - r, y - r, r * 2, r * 2);
@@ -502,7 +504,7 @@ public class SimulationPanel extends DrawingPanel implements Serializable, Edito
                     g.setColor(Color.magenta);
                     radius.setLine(robot.getObjectBouds().x, robot.getObjectBouds().y, x, y);
                     g.draw(radius);
-                    g.setStroke(defaultStroke); //fim da linha pontilhada
+                    g.setStroke(SIMPLE_STROKE); //fim da linha pontilhada
                     //desenha o centro
                     dot.setFrame(x - 3, y - 3, 6, 6);
                     g.fill(dot);
@@ -519,7 +521,7 @@ public class SimulationPanel extends DrawingPanel implements Serializable, Edito
 //            paintPoints(g, obstacle, 5);
 //        }
 //        per.draw(g);
-        g.setStroke(new BasicStroke(5));
+        g.setStroke(Environment.DEFAULT_STROKE);
 
         if (itemSelected == ITEM_REMOVE_LINE || itemSelected == ITEM_REMOVE_AREA) {
             g.setColor(Color.red);
@@ -565,7 +567,7 @@ public class SimulationPanel extends DrawingPanel implements Serializable, Edito
 //        for (Shape s : obstacles) {
 //            g.draw(s);
 //        }
-        g.setStroke(defaultStroke);
+        g.setStroke(SIMPLE_STROKE);
     }
 
     public void resetSimulation() {
