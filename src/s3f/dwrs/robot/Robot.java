@@ -24,8 +24,6 @@ import s3f.core.plugin.Plugabble;
 import s3f.core.project.Element;
 import s3f.core.project.FileCreator;
 import s3f.core.project.SimpleElement;
-import s3f.core.project.editormanager.DefaultEditorManager;
-import s3f.core.project.editormanager.EditorManager;
 import s3f.dwrs.robot.action.Action;
 import s3f.dwrs.robot.action.system.AddNewDevice;
 import s3f.dwrs.robot.action.system.ResetSystem;
@@ -54,7 +52,6 @@ public class Robot extends SimpleElement implements Observer<ByteBuffer, Connect
 
     public static final Element R_FILE = new Robot();
     public static final Element.CategoryData R_FILES = new Element.CategoryData("Robot", "r", new ImageIcon(Environment.class.getResource("/resources/icons/fugue/robot-new.png")), R_FILE);
-    private static final EditorManager EDITOR_MANAGER = new DefaultEditorManager(new RobotEditorPanel());
 
     public static final double SIZE_CM = 20;
     public static final double size = 60;
@@ -146,7 +143,7 @@ public class Robot extends SimpleElement implements Observer<ByteBuffer, Connect
     private final ByteBuffer buffer = ByteBuffer.allocate(256);
 
     public Robot() {
-        super("rob", "/resources/icons/fugue/robot-new.png", R_FILES, EDITOR_MANAGER);
+        super("rob", "/resources/icons/fugue/robot-new.png", R_FILES, new Class[]{RobotEditorPanel.class});
         devices = new ArrayList<>();
         actions = new ArrayList<>();
         connections = new ArrayList<>();

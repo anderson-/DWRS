@@ -32,8 +32,6 @@ import s3f.core.project.Editor;
 import s3f.core.project.Element;
 import s3f.core.project.FileCreator;
 import s3f.core.project.Resource;
-import s3f.core.project.editormanager.DefaultEditorManager;
-import s3f.core.project.editormanager.EditorManager;
 import s3f.dwrs.robot.Robot;
 import s3f.dwrs.robot.device.IRProximitySensor;
 import s3f.util.LineIterator;
@@ -46,10 +44,9 @@ public class Environment extends ComplexElement {
 
     public static final Element ENV_FILE = new Environment();
     public static final Element.CategoryData ENV_FILES = new Element.CategoryData("Environment", "env", new ImageIcon(Environment.class.getResource("/resources/icons/fugue/tree.png")), ENV_FILE);
-    private static final EditorManager EDITOR_MANAGER = new DefaultEditorManager(new SimulationPanel());
 
     public static final Stroke DEFAULT_STROKE = new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.CAP_ROUND);
-    
+
     private final ArrayList<Line2D.Double> followLines = new ArrayList<>();
     private final ArrayList<Line2D.Double> walls = new ArrayList<>();
     private final ArrayList<Line2D.Double> followLinesTmp = new ArrayList<>();
@@ -63,7 +60,7 @@ public class Environment extends ComplexElement {
     }
 
     public Environment() {
-        super("envirr", "/resources/icons/fugue/tree.png", ENV_FILES, EDITOR_MANAGER, Robot.R_FILES.getName());
+        super("envirr", "/resources/icons/fugue/tree.png", ENV_FILES, new Class[]{SimulationPanel.class}, Robot.R_FILES.getName());
     }
 
     @Deprecated
