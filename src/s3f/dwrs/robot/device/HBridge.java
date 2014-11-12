@@ -84,7 +84,7 @@ public class HBridge extends Device implements VirtualDevice {
     }
 
     @Override
-    public String stateToString() {
+    public Object getState() {
         return "";
     }
 

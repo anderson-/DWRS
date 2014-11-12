@@ -30,7 +30,6 @@ import s3f.dwrs.robot.device.Compass;
 import s3f.dwrs.robot.device.Device;
 import s3f.dwrs.robot.device.HBridge;
 import s3f.dwrs.robot.device.IRProximitySensor;
-import s3f.dwrs.robot.device.LED;
 import s3f.dwrs.robot.device.ReflectanceSensorArray;
 import s3f.dwrs.robot.VirtualConnection;
 
@@ -246,7 +245,7 @@ public class RobotControlPanel extends JPanel {
         robot.add(new Compass());
         robot.add(new IRProximitySensor());
         robot.add(new ReflectanceSensorArray());
-        robot.add(new LED());
+//        robot.add(new LED());
         robot.add(new Button());
         robot.add(new Action() { //ação 0
             @Override
@@ -348,7 +347,7 @@ public class RobotControlPanel extends JPanel {
         devices.add(Compass.class);
         devices.add(IRProximitySensor.class);
         devices.add(ReflectanceSensorArray.class);
-        devices.add(LED.class);
+//        devices.add(LED.class);
         devices.add(Button.class);
 
         return devices;

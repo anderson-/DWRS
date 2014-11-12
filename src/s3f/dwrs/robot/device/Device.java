@@ -27,7 +27,7 @@ public abstract class Device extends Message {
 
     public abstract void setState(ByteBuffer data);
 
-    public abstract String stateToString();
+    public abstract Object getState();
     
     public abstract void resetState();
 

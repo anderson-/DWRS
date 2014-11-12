@@ -39,7 +39,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
-import java.io.Serializable;
 import static java.lang.Math.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,12 +50,7 @@ import s3f.core.project.Editor;
 import s3f.core.project.Element;
 import s3f.core.ui.tab.TabProperty;
 import s3f.dwrs.robot.Robot;
-import s3f.dwrs.robot.device.Button;
 import s3f.dwrs.robot.device.Device;
-import s3f.dwrs.robot.device.IRProximitySensor;
-import s3f.dwrs.robot.device.LED;
-import s3f.dwrs.robot.device.ReflectanceSensorArray;
-import s3f.jifi.flowchart.Procedure;
 import s3f.magenta.Drawable;
 import s3f.magenta.DrawingPanel;
 import s3f.magenta.Rotable;
@@ -65,7 +59,6 @@ import s3f.magenta.sidepanel.Classifiable;
 import s3f.magenta.sidepanel.Configurable;
 import s3f.magenta.sidepanel.Item;
 import s3f.magenta.sidepanel.SidePanel;
-import s3f.magenta.util.QuickFrame;
 import s3f.util.trafficsimulator.Timer;
 
 /**

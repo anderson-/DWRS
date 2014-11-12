@@ -73,8 +73,8 @@ public class IRProximitySensor extends Device implements VirtualDevice, Drawable
     }
 
     @Override
-    public String stateToString() {
-        return "" + dist;
+    public Object getState() {
+        return dist;
     }
 
     @Override

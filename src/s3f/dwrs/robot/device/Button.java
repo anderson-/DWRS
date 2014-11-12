@@ -88,8 +88,8 @@ public class Button extends Device implements VirtualDevice, Drawable, Selectabl
     }
 
     @Override
-    public String stateToString() {
-        return "[" + values[0] + "," + values[1] + "," + values[2] + "," + values[3] + "," + values[4] + "]";
+    public Object getState() {
+        return values;
     }
 
     @Override

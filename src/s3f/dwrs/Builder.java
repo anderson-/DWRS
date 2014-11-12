@@ -7,17 +7,16 @@ package s3f.dwrs;
 
 import s3f.core.plugin.ConfigurableObject;
 import s3f.core.plugin.PluginBuilder;
-import s3f.dwrs.flowchart.Move;
-import s3f.dwrs.flowchart.Read;
-import s3f.dwrs.flowchart.ReadDevice;
-import s3f.dwrs.flowchart.Rotate;
-import s3f.dwrs.flowchart.SendBytes;
+import s3f.dwrs.commands.Move;
+import s3f.dwrs.commands.Print;
+import s3f.dwrs.commands.ReadDevice;
+import s3f.dwrs.commands.Rotate;
+import s3f.dwrs.commands.SendBytes;
+import s3f.dwrs.commands.Wait;
 import s3f.dwrs.robot.Robot;
 import s3f.dwrs.robot.device.IRProximitySensor;
-import s3f.dwrs.robot.device.LED;
 import s3f.dwrs.robot.device.ReflectanceSensorArray;
 import s3f.dwrs.simulation.Environment;
-import s3f.jifi.core.parser.ConstantsProvider;
 
 /**
  *
@@ -32,9 +31,10 @@ public class Builder extends PluginBuilder {
     @Override
     public void init() {
         //dispositivos
-        ConfigurableObject o = new ConfigurableObject("s3f.dwrs.device");
-        o.getData().setProperty("device", new LED());
-        pm.registerFactory(o);
+        ConfigurableObject o;
+//        o = new ConfigurableObject("s3f.dwrs.device");
+//        o.getData().setProperty("device", new LED());
+//        pm.registerFactory(o);
         o = new ConfigurableObject("s3f.dwrs.device");
         o.getData().setProperty("device", new IRProximitySensor());
         pm.registerFactory(o);
@@ -50,7 +50,7 @@ public class Builder extends PluginBuilder {
         o.getData().setProperty("procedure", new Rotate());
         pm.registerFactory(o);
         o = new ConfigurableObject("s3f.jifi.cmd");
-        o.getData().setProperty("procedure", new Read());
+        o.getData().setProperty("procedure", new Wait());
         pm.registerFactory(o);
         o = new ConfigurableObject("s3f.jifi.cmd");
         o.getData().setProperty("procedure", new ReadDevice());
@@ -58,10 +58,13 @@ public class Builder extends PluginBuilder {
         o = new ConfigurableObject("s3f.jifi.cmd");
         o.getData().setProperty("procedure", new SendBytes());
         pm.registerFactory(o);
-        
-        o = new ConfigurableObject("s3f.jifi.constants");
-        o.getData().setProperty("provider", new ConstantsProvider("Distancia", "Refletancia", "Bussola"));
+        o = new ConfigurableObject("s3f.jifi.cmd");
+        o.getData().setProperty("procedure", new Print());
         pm.registerFactory(o);
+        
+//        o = new ConfigurableObject("s3f.jifi.constants");
+//        o.getData().setProperty("provider", new ConstantsProvider("Distancia", "Refletancia", "Bussola"));
+//        pm.registerFactory(o);
         
         pm.registerFactory(Environment.ENV_FILES);
         pm.registerFactory(Robot.R_FILES);

@@ -35,7 +35,6 @@ import s3f.dwrs.robot.device.Compass;
 import s3f.dwrs.robot.device.Device;
 import s3f.dwrs.robot.device.HBridge;
 import s3f.dwrs.robot.device.IRProximitySensor;
-import s3f.dwrs.robot.device.LED;
 import s3f.dwrs.robot.device.ReflectanceSensorArray;
 import s3f.dwrs.simulation.Environment;
 import s3f.magenta.Drawable;
@@ -110,8 +109,8 @@ public class Robot extends SimpleElement implements Observer<ByteBuffer, Connect
         }
 
         @Override
-        public String stateToString() {
-            return "" + stepTime;
+        public Object getState() {
+            return stepTime;
         }
 
         @Override

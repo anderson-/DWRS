@@ -50,8 +50,8 @@ public class Compass extends Device implements VirtualDevice {
     }
 
     @Override
-    public String stateToString() {
-        return "" + alpha;
+    public Object getState() {
+        return alpha;
     }
 
     @Override
