@@ -10,6 +10,7 @@ import s3f.dwrs.robot.VirtualConnection;
 import s3f.dwrs.robot.action.RotateAction;
 import s3f.dwrs.robot.device.Compass;
 import s3f.dwrs.robot.device.HBridge;
+import s3f.jifi.core.commands.Command;
 import s3f.jifi.core.interpreter.ExecutionException;
 import s3f.jifi.core.interpreter.ResourceManager;
 import s3f.util.trafficsimulator.Clock;

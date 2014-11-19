@@ -12,6 +12,7 @@ import s3f.dwrs.robot.device.Device;
 import s3f.jifi.core.interpreter.ExecutionException;
 import s3f.jifi.core.interpreter.ResourceManager;
 import s3f.util.trafficsimulator.Clock;
+import s3f.jifi.core.commands.Command;
 
 /**
  *
@@ -31,7 +32,6 @@ public class ReadDevice implements Command {
 
     public static Object perform(Integer deviceIndex, Object rm) throws ExecutionException {
         Robot robot = ((ResourceManager) rm).getResource(Robot.class);
-        System.out.println("t:" + deviceIndex);
         Device device = robot.getDevice(deviceIndex);
         if (device != null) {
             //mensagem get padrão 

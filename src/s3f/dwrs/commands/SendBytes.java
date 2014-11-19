@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
+import s3f.jifi.core.commands.Command;
 import s3f.jifi.core.interpreter.ExecutionException;
 
 /**

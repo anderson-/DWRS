@@ -8,6 +8,7 @@ package s3f.dwrs.commands;
 import s3f.dwrs.robot.Robot;
 import s3f.dwrs.robot.device.Device;
 import s3f.dwrs.robot.device.HBridge;
+import s3f.jifi.core.commands.Command;
 import s3f.jifi.core.interpreter.ExecutionException;
 import s3f.jifi.core.interpreter.ResourceManager;
 import s3f.util.trafficsimulator.Clock;

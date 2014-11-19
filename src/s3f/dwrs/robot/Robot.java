@@ -218,7 +218,6 @@ public class Robot extends SimpleElement implements Observer<ByteBuffer, Connect
     public final <T> T getDevice(Class<? extends Device> c) {
         Message.setConnection(getMainConnection());
         for (Device d : devices) {
-            System.out.println(c);
             if (c.isInstance(d)) {//TODO possivel null
                 return (T) d;
             }

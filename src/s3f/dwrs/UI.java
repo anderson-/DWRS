@@ -15,15 +15,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
@@ -34,20 +31,15 @@ import javax.swing.plaf.basic.BasicRadioButtonMenuItemUI;
 import s3f.core.plugin.EntityManager;
 import s3f.core.plugin.PluginManager;
 import s3f.core.project.Project;
-import s3f.core.script.Script;
 import s3f.core.ui.GUIBuilder;
 import s3f.core.ui.MainUI;
 import s3f.core.ui.ToolBarButton;
-import s3f.dwrs.commands.Command;
 import s3f.dwrs.robot.Robot;
 import s3f.dwrs.robot.VirtualConnection;
 import s3f.dwrs.robot.connection.Connection;
 import s3f.dwrs.robot.connection.Serial2;
 import s3f.dwrs.robot.device.Device;
-import s3f.jifi.core.interpreter.ResourceManager;
-import s3f.jifi.core.js.MyScriptable;
 import s3f.util.ColorUtils;
-import s3f.util.trafficsimulator.Clock;
 
 /**
  *
@@ -236,18 +228,18 @@ public class UI extends GUIBuilder {
     private static final ImageIcon ICON_RECEIVE_TRANSMITV;
 
     static {
-        ICON_OFFLINE = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/network-offline.png"));
-        ICON_IDLE = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/network-idle.png"));
-        ICON_ERROR = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/network-error.png"));
-        ICON_FULL_ERROR = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/software-update-urgent.png"));
+        ICON_OFFLINE = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/network-offline.png"));
+        ICON_IDLE = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/network-idle.png"));
+        ICON_ERROR = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/network-error.png"));
+        ICON_FULL_ERROR = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/software-update-urgent.png"));
 
-        ICON_RECEIVE = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/network-receive.png"));
-        ICON_TRANSMIT = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/network-transmit.png"));
-        ICON_RECEIVE_TRANSMIT = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/network-transmit-receive.png"));
+        ICON_RECEIVE = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/network-receive.png"));
+        ICON_TRANSMIT = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/network-transmit.png"));
+        ICON_RECEIVE_TRANSMIT = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/network-transmit-receive.png"));
 
-        ICON_RECEIVEV = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/virtual-network-receive.png"));
-        ICON_TRANSMITV = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/virtual-network-transmit.png"));
-        ICON_RECEIVE_TRANSMITV = new ImageIcon(UI.class.getResource("/resources/tango/32x32/status/virtual-network-transmit-receive.png"));
+        ICON_RECEIVEV = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/virtual-network-receive.png"));
+        ICON_TRANSMITV = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/virtual-network-transmit.png"));
+        ICON_RECEIVE_TRANSMITV = new ImageIcon(UI.class.getResource("/resources/tango/24x24/status/virtual-network-transmit-receive.png"));
     }
 
     public static final String VIRTUAL_CONNECTION = "Virtual";
@@ -343,7 +335,6 @@ public class UI extends GUIBuilder {
                             if (availableDevices.size() > 0) {
                                 button.setEnabled(true);
                             } else {
-                                System.out.println("no dev");
                                 button.setEnabled(false);
                             }
                         }
@@ -451,51 +442,6 @@ public class UI extends GUIBuilder {
 //        button.setRolloverEnabled(false);
 //        this.addToolbarComponent(connectionStatusGraph, 600);
 //        this.addToolbarComponent(new ToolBarButton().getJComponent(), 0);
-
-        addMenuItem("Simulation>", "S", null, null, null, 4, null);
-        addMenuItem("Simulation>Run simulation", "S", "control shift S", null, null, 0, new AbstractAction() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                JOptionPane.showConfirmDialog(null, "Iniciando Simulação");
-
-                final MyScriptable myScriptable = new MyScriptable();
-
-                EntityManager em = PluginManager.getInstance().createFactoryManager(null);
-                List<Command> list = em.getAllProperties("s3f.jifi.cmd.*", "procedure", Command.class);
-                if (list != null) {
-                    for (Command o : list) {
-                        System.out.println(o);
-                        for (Class[] args : o.getArgs()) {
-                            myScriptable.register(o.getName(), o.getClass(), "perform", args);
-                        }
-                    }
-                }
-
-                final ResourceManager rm = new ResourceManager();
-                rm.setResource(new Clock());
-
-                final Script mainSource = new Script();
-                
-                Project project = (Project) em.getProperty("s3f.core.project.tmp", "project");
-                for (s3f.core.project.Element e : project.getElements()) {
-                    if (e instanceof Robot) {
-                        Robot robot = (Robot) e;
-                        rm.setResource(robot);
-//                        robot.getMainConnection().establishConnection();
-                    } else if (e instanceof Script) {
-                        Script script = (Script) e;
-                        mainSource.setText(script.getText());
-                    }
-                }
-                new Thread() {
-                    @Override
-                    public void run() {
-                        myScriptable.compileAndRun(mainSource.getText(), "My Script", rm);
-                    }
-                }.start();
-            }
-        });
 
     }
 
