@@ -13,8 +13,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.StringReader;
 import static java.lang.Math.cos;
 import static java.lang.Math.pow;
 import static java.lang.Math.sin;
@@ -30,8 +29,8 @@ import s3f.core.plugin.Plugabble;
 import s3f.core.project.ComplexElement;
 import s3f.core.project.Editor;
 import s3f.core.project.Element;
-import s3f.core.project.FileCreator;
 import s3f.core.project.Resource;
+import s3f.core.project.editormanager.TextFile;
 import s3f.dwrs.robot.Robot;
 import s3f.dwrs.robot.device.IRProximitySensor;
 import s3f.util.LineIterator;
@@ -40,7 +39,7 @@ import s3f.util.LineIterator;
  *
  * @author antunes
  */
-public class Environment extends ComplexElement {
+public class Environment extends ComplexElement implements TextFile {
 
     public static final Element ENV_FILE = new Environment();
     public static final Element.CategoryData ENV_FILES = new Element.CategoryData("Environment", "env", new ImageIcon(Environment.class.getResource("/resources/icons/fugue/tree.png")), ENV_FILE);
@@ -116,84 +115,6 @@ public class Environment extends ComplexElement {
         if (i != -1) {
             followLinesData.remove(i);
         }
-    }
-
-    @Override
-    public void save(FileCreator fileCreator) {
-        StringBuilder sb = new StringBuilder();
-        NumberFormat format = NumberFormat.getInstance(Locale.US);
-        format.setGroupingUsed(false);
-        if (format instanceof DecimalFormat) {
-            ((DecimalFormat) format).applyPattern("#.00");
-        }
-
-        sb.append("# Environment ").append(System.currentTimeMillis()).append(" #\n");
-
-        if (!wallsData.isEmpty()) {
-            sb.append("# Obstacles #\n");
-            sb.append("\n");
-            for (double[] data : wallsData) {
-                sb.append("wall(").append(format.format(data[0])).append(", ").append(format.format(data[1])).append(", ").append(format.format(data[2])).append(", ").append(format.format(data[3])).append(")\n");
-            }
-            sb.append("\n");
-        }
-
-        if (!followLinesData.isEmpty()) {
-            sb.append("# Followable Lines #\n");
-            sb.append("\n");
-            for (double[] data : followLinesData) {
-                sb.append("line(").append(format.format(data[0])).append(", ").append(format.format(data[1])).append(", ").append(format.format(data[2])).append(", ").append(format.format(data[3])).append(")\n");
-            }
-        }
-
-        sb.append("\n");
-
-        fileCreator.makeTextFile(getName(), ENV_FILES.getExtension(), sb);
-    }
-
-    @Override
-    public Element load(InputStream stream) {
-        Environment env = new Environment();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        String line;
-        try {
-            while ((line = reader.readLine()) != null) {
-                if (!line.startsWith("#") && !line.trim().isEmpty()) {
-                    String str = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
-                    String[] argv = str.split(",");
-                    if (line.contains("wall") && argv.length == 4) {
-                        argv[0] = argv[0].trim();
-                        argv[1] = argv[1].trim();
-                        argv[2] = argv[2].trim();
-                        argv[3] = argv[3].trim();
-
-                        double x1 = Double.parseDouble(argv[0]);
-                        double y1 = Double.parseDouble(argv[1]);
-                        double x2 = Double.parseDouble(argv[2]);
-                        double y2 = Double.parseDouble(argv[3]);
-
-                        env.addWall(new double[]{x1, y1, x2, y2});
-
-                    } else if (line.contains("line") && argv.length == 4) {
-                        argv[0] = argv[0].trim();
-                        argv[1] = argv[1].trim();
-                        argv[2] = argv[2].trim();
-                        argv[3] = argv[3].trim();
-
-                        double x1 = Double.parseDouble(argv[0]);
-                        double y1 = Double.parseDouble(argv[1]);
-                        double x2 = Double.parseDouble(argv[2]);
-                        double y2 = Double.parseDouble(argv[3]);
-
-                        env.addFollowLine(new double[]{x1, y1, x2, y2});
-                    }
-                }
-            }
-            reader.close();
-        } catch (IOException ex) {
-
-        }
-        return env;
     }
 
     public double beamDistance(double x, double y, double theta) {
@@ -296,6 +217,82 @@ public class Environment extends ComplexElement {
                 currentEditor.update();
             }
         }
+    }
+
+    @Override
+    public void setText(String text) {
+        clearEnvironment();
+        BufferedReader reader = new BufferedReader(new StringReader(text));
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                if (!line.startsWith("#") && !line.trim().isEmpty()) {
+                    String str = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+                    String[] argv = str.split(",");
+                    if (line.contains("wall") && argv.length == 4) {
+                        argv[0] = argv[0].trim();
+                        argv[1] = argv[1].trim();
+                        argv[2] = argv[2].trim();
+                        argv[3] = argv[3].trim();
+
+                        double x1 = Double.parseDouble(argv[0]);
+                        double y1 = Double.parseDouble(argv[1]);
+                        double x2 = Double.parseDouble(argv[2]);
+                        double y2 = Double.parseDouble(argv[3]);
+
+                        addWall(new double[]{x1, y1, x2, y2});
+
+                    } else if (line.contains("line") && argv.length == 4) {
+                        argv[0] = argv[0].trim();
+                        argv[1] = argv[1].trim();
+                        argv[2] = argv[2].trim();
+                        argv[3] = argv[3].trim();
+
+                        double x1 = Double.parseDouble(argv[0]);
+                        double y1 = Double.parseDouble(argv[1]);
+                        double x2 = Double.parseDouble(argv[2]);
+                        double y2 = Double.parseDouble(argv[3]);
+
+                        addFollowLine(new double[]{x1, y1, x2, y2});
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException ex) {
+
+        }
+    }
+
+    @Override
+    public String getText() {
+        StringBuilder sb = new StringBuilder();
+        NumberFormat format = NumberFormat.getInstance(Locale.US);
+        format.setGroupingUsed(false);
+        if (format instanceof DecimalFormat) {
+            ((DecimalFormat) format).applyPattern("#.00");
+        }
+
+        sb.append("# Environment ").append(System.currentTimeMillis()).append(" #\n");
+
+        if (!wallsData.isEmpty()) {
+            sb.append("# Obstacles #\n");
+            sb.append("\n");
+            for (double[] data : wallsData) {
+                sb.append("wall(").append(format.format(data[0])).append(", ").append(format.format(data[1])).append(", ").append(format.format(data[2])).append(", ").append(format.format(data[3])).append(")\n");
+            }
+            sb.append("\n");
+        }
+
+        if (!followLinesData.isEmpty()) {
+            sb.append("# Followable Lines #\n");
+            sb.append("\n");
+            for (double[] data : followLinesData) {
+                sb.append("line(").append(format.format(data[0])).append(", ").append(format.format(data[1])).append(", ").append(format.format(data[2])).append(", ").append(format.format(data[3])).append(")\n");
+            }
+        }
+
+        sb.append("\n");
+        return sb.toString();
     }
 
 }

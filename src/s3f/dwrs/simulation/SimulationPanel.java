@@ -66,13 +66,12 @@ import s3f.util.trafficsimulator.Timer;
  */
 public class SimulationPanel extends DrawingPanel implements Serializable, Editor {
 
-    
     public static final BasicStroke SIMPLE_STROKE = new BasicStroke();
     public static final BasicStroke DASHED_STROKE = new BasicStroke(1.0f,
             BasicStroke.CAP_ROUND,
             BasicStroke.JOIN_MITER,
             10.0f, new float[]{5}, 0.0f);
-    
+
     public static final Item ITEM_LINE;
     public static final Item ITEM_LINE_POLI;
     public static final Item ITEM_OBSTACLE_LINE;
@@ -264,6 +263,9 @@ public class SimulationPanel extends DrawingPanel implements Serializable, Edito
     public void drawBackground(Graphics2D g, GraphicAttributes ga, InputState in) {
         super.drawBackground(g, ga, in);
         environment.draw(g);
+        for (Robot robot : robots) {
+            robot.getPerception().draw(g);
+        }
     }
 
     @Override
@@ -497,8 +499,7 @@ public class SimulationPanel extends DrawingPanel implements Serializable, Edito
                         g.draw(circle);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        System.out.println(circle);
-                        System.exit(0);
+                        System.err.println("circle: " + circle);
                     }
                     //desenha o raio
                     g.setColor(Color.magenta);

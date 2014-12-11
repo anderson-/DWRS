@@ -4,6 +4,7 @@
  */
 package s3f.dwrs.robot;
 
+import s3f.dwrs.robot.perception.Perception;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -886,7 +887,7 @@ public class Robot extends SimpleElement implements Observer<ByteBuffer, Connect
         ga.removeRelativePosition(t);
         g.setTransform(t);
 
-        perception.draw(g);
+//        perception.draw(g);
 
         t.setTransform(o);
 
