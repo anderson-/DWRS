@@ -42,7 +42,7 @@ import s3f.util.LineIterator;
 public class Environment extends ComplexElement implements TextFile {
 
     public static final Element ENV_FILE = new Environment();
-    public static final Element.CategoryData ENV_FILES = new Element.CategoryData("Environment", "env", new ImageIcon(Environment.class.getResource("/resources/icons/fugue/tree.png")), ENV_FILE);
+    public static final Element.CategoryData ENV_FILES = new Element.CategoryData("Environments", "env", new ImageIcon(Environment.class.getResource("/resources/icons/fugue/maps-stack.png")), ENV_FILE);
 
     public static final Stroke DEFAULT_STROKE = new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.CAP_ROUND);
 
@@ -59,7 +59,7 @@ public class Environment extends ComplexElement implements TextFile {
     }
 
     public Environment() {
-        super("envirr", "/resources/icons/fugue/tree.png", ENV_FILES, new Class[]{SimulationPanel.class}, Robot.R_FILES.getName());
+        super("envirr", "/resources/icons/fugue/map.png", ENV_FILES, new Class[]{SimulationPanel.class}, Robot.R_FILES.getName());
     }
 
     @Deprecated

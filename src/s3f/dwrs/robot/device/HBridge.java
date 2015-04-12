@@ -60,7 +60,7 @@ public class HBridge extends Device implements VirtualDevice {
 
     public void setFullState(byte speedM1, byte speedM2) {
         byte[] msg = new byte[10];
-        msg[0] = Robot.CMD_SET; //comando get
+        msg[0] = Robot.CMD_SET; //comando get 5
         msg[1] = getID(); //id
         msg[2] = 2; //tamanho da mensagem (2 bytes)
         msg[3] = 0;

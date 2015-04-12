@@ -5,12 +5,16 @@
  */
 package s3f.dwrs.commands;
 
+import java.io.PrintStream;
 import java.util.Arrays;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
+import s3f.core.ui.MainUI;
+import s3f.dwrs.robot.Robot;
 import s3f.jifi.core.commands.Command;
 import s3f.jifi.core.interpreter.ExecutionException;
+import s3f.jifi.core.interpreter.ResourceManager;
 
 /**
  *
@@ -29,9 +33,26 @@ public class SendBytes implements Command {
     }
 
     public static void perform(Context cx, Scriptable thisObj, Object[] args, Function funOb) throws ExecutionException {
-        System.out.println(Arrays.toString(args));
-//        Robot robot = ((ResourceManager) rm).getResource(Robot.class);
-//        robot.getMainConnection().send(data);
+        PrintStream out = MainUI.getInstance().getConsole();
+        int len = args.length - 2;
+        if (len < 0) {
+            out.println(">>[]");
+        }
+        out.print(">>[");
+        for (int i = 0;; i++) {
+            out.print(String.valueOf(args[i]));
+            if (i == len) {
+                out.println(']');
+                break;
+            }
+            out.print(", ");
+        }
+        Robot robot = ((ResourceManager) args[args.length - 1]).getResource(Robot.class);
+        byte data[] = new byte[args.length - 1];
+        for (int i = 0; i < args.length - 1; i++) {
+            data[i] = ((Number) args[i]).byteValue();
+        }
+        robot.getMainConnection().send(data);
     }
 
 }
