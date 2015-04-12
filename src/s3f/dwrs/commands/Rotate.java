@@ -54,11 +54,10 @@ public class Rotate implements Command {
                 speed = (byte) Math.min(-30, (int) (Math.max(-127, vars.turnRemaining * 0.71))); // velocidade proporcional ao erro, 0.71 = 128/180°
             }
             hbridge.setFullState(speed, (byte) -speed);
-            return false;
-
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public static void perform(Integer angle, Object rm) throws ExecutionException {
