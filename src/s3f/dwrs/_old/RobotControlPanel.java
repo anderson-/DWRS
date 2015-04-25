@@ -15,7 +15,6 @@ import java.util.Collection;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -23,8 +22,7 @@ import s3f.dwrs.robot.Robot;
 import s3f.dwrs.robot.action.Action;
 import s3f.dwrs.robot.action.RotateAction;
 import s3f.dwrs.robot.connection.Connection;
-import s3f.dwrs.robot.connection.Serial;
-import s3f.dwrs.robot.connection.Serial2;
+import s3f.dwrs.robot.connection.SimpleSerial;
 import s3f.dwrs.robot.device.Button;
 import s3f.dwrs.robot.device.Compass;
 import s3f.dwrs.robot.device.Device;
@@ -228,7 +226,7 @@ public class RobotControlPanel extends JPanel {
     public static final String VIRTUAL_CONNECTION = "Virtual";
     public static int INSTANCE = 0;
     private TitledBorder border;
-    private Serial2 serial;
+    private SimpleSerial serial;
     private Connection connection = null;
     private RobotManager robotManager;
     private boolean connected = false;
@@ -239,7 +237,7 @@ public class RobotControlPanel extends JPanel {
 
     public RobotControlPanel(RobotManager rm) {
         INSTANCE++;
-        serial = new Serial2(57600);
+        serial = new SimpleSerial(57600);
         robot = new Robot();
         robot.add(new HBridge());
         robot.add(new Compass());

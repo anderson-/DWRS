@@ -75,7 +75,7 @@ public abstract class Message {
      * 
      * 
      * @return
-     * @throws robotinterface.robot.connection.message.Message.TimeoutException 
+     * @throws jifi.robot.connection.message.Message.TimeoutException 
      */
     public final boolean isValidRead() throws TimeoutException {
         if (received) {

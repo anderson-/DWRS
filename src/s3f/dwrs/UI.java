@@ -37,7 +37,7 @@ import s3f.core.ui.ToolBarButton;
 import s3f.dwrs.robot.Robot;
 import s3f.dwrs.robot.VirtualConnection;
 import s3f.dwrs.robot.connection.Connection;
-import s3f.dwrs.robot.connection.Serial2;
+import s3f.dwrs.robot.connection.SimpleSerial;
 import s3f.dwrs.robot.device.Device;
 import s3f.util.ColorUtils;
 
@@ -244,7 +244,7 @@ public class UI extends GUIBuilder {
 
     public static final String VIRTUAL_CONNECTION = "Virtual";
     private TitledBorder border;
-    private Serial2 serial;
+    private SimpleSerial serial;
     private Connection connection = null;
     private boolean connected = false;
     private Robot robot = null;
@@ -265,7 +265,7 @@ public class UI extends GUIBuilder {
     @Override
     public void init() {
 
-        serial = new Serial2(57600);
+        serial = new SimpleSerial(57600);
 //        robot = new Robot();
 //        robot.add(new HBridge());
 //        robot.add(new Compass());

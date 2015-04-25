@@ -5,7 +5,7 @@ package s3f.dwrs.simulation;
 // * To change this template file, choose Tools | Templates
 // * and open the template in the editor.
 // */
-//package robotinterface.robot.simulation;
+//package jifi.robot.simulation;
 //
 //import java.util.Enumeration;
 //
